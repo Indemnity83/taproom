@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
+
 abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     /**
@@ -21,5 +23,16 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
         return $app;
+    }
+
+    /**
+     * Setup the test environment.
+     *
+     * @return void
+     */
+    public function setUp() {
+        parent::setUp();
+
+        Artisan::call('migrate');
     }
 }

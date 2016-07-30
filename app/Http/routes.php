@@ -18,3 +18,19 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+// API
+Route::get('api/v1/version', function () {
+    return Response::json([
+        'object' => [
+            'server_version' => '1.2.3'
+        ],
+        'meta' => [
+            'result' => 'ok'
+        ]
+    ]);
+});
+
+// Device Pairing
+Route::post('api/v1/devices/link', 'DevicesController@startPairing');
+Route::get('api/v1/devices/link/status/{token}', 'DevicesController@checkPairing');
