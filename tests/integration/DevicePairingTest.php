@@ -36,6 +36,9 @@ class DevicePairingTest extends TestCase
         $token = App\Token::first();
 
         // Assert the token is returned to the client
+        $client->seeJsonStructure([
+            'object' => ['name', 'linked', 'code']
+        ]);
         $client->seeJson(['name' => $deviceName]);
         $client->seeJson(['linked' => false]);
         $client->seeJson(['code' => $token->token]);
@@ -51,9 +54,10 @@ class DevicePairingTest extends TestCase
         $client = $this->json('GET', '/api/v1/devices/link/status/' . $token->token);
 
         // Assert the token returns status
-        $client->seeJson(['name' => $token->name]);
+        $client->seeJsonStructure([
+            'object' => ['linked']
+        ]);
         $client->seeJson(['linked' => false]);
-        $client->seeJson(['code' => $token->token]);
 
     }
 
@@ -75,17 +79,19 @@ class DevicePairingTest extends TestCase
     /** @test */
     function client_polls_pairing_status_after_validation()
     {
-        // Given a validated token exists on the server
+        // Given a user validated token exists on the server
+        $user = factory(App\User::class)->create();
         $token = App\Token::generate('Test Device');
-        $token->validate();
+        $token->validate($user->id);
 
         // Where the client polls the token
         $client = $this->json('GET', '/api/v1/devices/link/status/' . $token->token);
 
         // Assert the token returns status and an API key
-        $client->seeJson(['name' => $token->name]);
+        $client->seeJsonStructure([
+            'object' => ['linked', 'api_key']
+        ]);
         $client->seeJson(['linked' => true]);
-        $client->seeJson(['code' => $token->token]);
-        $client->seeJson(['api_key' => 'hpuT05132M1Nf220FOdwexces01XfdBv']);
+        $client->seeJson(['api_key' => $token->apiKey->key]);
     }
 }

@@ -158,6 +158,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Third Party Providers...
+         */
+        Chrisbjr\ApiGuard\Providers\ApiGuardServiceProvider::class,
+
     ],
 
     /*
@@ -203,6 +208,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'ApiGuardAuth' => Chrisbjr\ApiGuard\Facades\ApiGuardAuth::class,
 
     ],
 

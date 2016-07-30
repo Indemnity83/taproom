@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Chrisbjr\ApiGuard\Models\ApiKey;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -59,6 +60,14 @@ class Token extends Model
     }
 
     /**
+     * @return string
+     */
+    public static function tokens()
+    {
+        return implode(',', Static::all()->pluck('token')->toArray());
+    }
+
+    /**
      * The "booting" method of the model
      */
     protected static function boot()
@@ -95,8 +104,11 @@ class Token extends Model
      *
      * @return $this
      */
-    public function validate()
+    public function validate($userId)
     {
+        $key = ApiKey::make($userId);
+
+        $this->apiKey()->associate($key);
         $this->is_validated = true;
         $this->save();
 
@@ -114,5 +126,15 @@ class Token extends Model
         $this->save();
 
         return $this;
+    }
+
+    /**
+     * Tokens (may) belong to an API Key
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function apiKey()
+    {
+        return $this->belongsTo(ApiKey::class);
     }
 }

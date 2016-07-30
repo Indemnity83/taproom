@@ -3,61 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Token;
+use Chrisbjr\ApiGuard\Models\ApiKey;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
-
 
 class DevicesController extends Controller
 {
 
     /**
-     * @param Request $request
-     * @return mixed
+     * DevicesController constructor.
      */
-    public function startPairing(Request $request)
+    public function __construct()
     {
-        $name = $request->input('name', 'Unknown Device');
-        $token = Token::generate($name);
-
-        $response = [
-            'name' => $token->name,
-            'code' => $token->token,
-            'linked' => (bool)$token->is_validated
-        ];
-
-        return Response::json([
-            'object' => $response,
-            'meta' => [
-                'result' => 'ok'
-            ]
-        ]);
+        $this->middleware('auth');
     }
 
     /**
-     * @param Token $token
-     * @return mixed
+     * Show the form for pairing a new device
      */
-    public function checkPairing(Token $token)
+    public function createPair()
     {
-        $response = [
-            'name' => $token->name,
-            'code' => $token->token,
-            'linked' => (bool)$token->is_validated
-        ];
+        return view('devices.pair');
+    }
 
-        if ($token->is_validated) {
-            // Get API Key
-            // Add API key to response
-            $response['api_key'] = 'hpuT05132M1Nf220FOdwexces01XfdBv';
-            // Invalidate token
-        }
-
-        return Response::json([
-            'object' => $response,
-            'meta' => [
-                'result' => 'ok'
-            ]
+    /**
+     * Validate the device pairing token
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storePair(Request $request)
+    {
+        $this->validate($request, [
+            'token' => 'required|in:' . Token::tokens(),
         ]);
+
+        $token = Token::findOrFail($request['token']);
+        $token->validate($userId = null);
+
+        return redirect('/')->with('status', 'Device Validated!');
     }
 
 }
