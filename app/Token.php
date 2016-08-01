@@ -107,6 +107,8 @@ class Token extends Model
     public function validate($userId)
     {
         $key = ApiKey::make($userId);
+        $key->description = 'Controller on '.$this->name;
+        $key->save();
 
         $this->apiKey()->associate($key);
         $this->is_validated = true;

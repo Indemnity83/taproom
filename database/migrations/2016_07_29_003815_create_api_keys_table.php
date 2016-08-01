@@ -16,6 +16,7 @@ class CreateApiKeysTable extends Migration
         Schema::create('api_keys', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id', false, true)->nullable();
+            $table->string('description')->nullable();
             $table->string('key', 40)->unique();
             $table->smallInteger('level');
             $table->boolean('ignore_limits');
@@ -41,9 +42,6 @@ class CreateApiKeysTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');;
         });
 
-        Schema::table('tokens', function ($table) {
-            $table->integer('api_key_id')->nullable();
-        });
     }
 
     /**
@@ -59,10 +57,6 @@ class CreateApiKeysTable extends Migration
 
         Schema::table('api_logs', function (Blueprint $table) {
             $table->dropForeign('api_logs_api_key_id_foreign');
-        });
-
-        Schema::table('tokens', function ($table) {
-            $table->dropColumn('api_key_id');
         });
 
         Schema::drop('api_keys');

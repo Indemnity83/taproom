@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Token;
-use Chrisbjr\ApiGuard\Models\ApiKey;
 use Illuminate\Http\Request;
 
 class DevicesController extends Controller
@@ -38,9 +37,10 @@ class DevicesController extends Controller
         ]);
 
         $token = Token::findOrFail($request['token']);
-        $token->validate($userId = null);
+        $token->validate(auth()->user()->id);
 
         return redirect('/')->with('status', 'Device Validated!');
     }
+
 
 }

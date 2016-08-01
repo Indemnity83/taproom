@@ -15,6 +15,7 @@ class CreateTokensTable extends Migration
         Schema::create('tokens', function (Blueprint $table) {
             $table->string('token')->index();
             $table->string('name')->nullable();
+            $table->integer('api_key_id')->nullable();
             $table->boolean('is_validated')->default(false);
             $table->dateTime('expires_at');
             $table->timestamps();

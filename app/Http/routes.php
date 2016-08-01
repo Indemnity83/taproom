@@ -32,8 +32,12 @@ Route::get('api/v1/version', function () {
 });
 
 // Device Pairing
-Route::post('api/v1/devices/link', 'Api\DeviceLinkController@startPairing');
-Route::get('api/v1/devices/link/status/{token}', 'Api\DeviceLinkController@checkPairing');
-
 Route::get('/link', 'DevicesController@createPair');
 Route::post('/link', 'DevicesController@storePair');
+
+// Settings
+Route::get('/settings/tokens', 'UsersController@tokens')->name('settings.tokens');
+
+// API Routes
+Route::post('api/v1/devices/link', 'Api\DeviceLinkController@startPairing');
+Route::get('api/v1/devices/link/status/{token}', 'Api\DeviceLinkController@checkPairing');

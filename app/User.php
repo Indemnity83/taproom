@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Chrisbjr\ApiGuard\Models\ApiKey;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -23,4 +24,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function tokens()
+    {
+        return $this->hasMany(ApiKey::class);
+    }
 }
