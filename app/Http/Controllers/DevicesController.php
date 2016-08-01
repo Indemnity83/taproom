@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class DevicesController extends Controller
 {
-
     /**
      * DevicesController constructor.
      */
@@ -17,7 +16,7 @@ class DevicesController extends Controller
     }
 
     /**
-     * Show the form for pairing a new device
+     * Show the form for pairing a new device.
      */
     public function createPair()
     {
@@ -25,7 +24,7 @@ class DevicesController extends Controller
     }
 
     /**
-     * Validate the device pairing token
+     * Validate the device pairing token.
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
@@ -33,7 +32,7 @@ class DevicesController extends Controller
     public function storePair(Request $request)
     {
         $this->validate($request, [
-            'token' => 'required|in:' . Token::tokens(),
+            'token' => 'required|in:'.Token::tokens(),
         ]);
 
         $token = Token::findOrFail($request['token']);
@@ -41,6 +40,4 @@ class DevicesController extends Controller
 
         return redirect('/')->with('status', 'Device Validated!');
     }
-
-
 }

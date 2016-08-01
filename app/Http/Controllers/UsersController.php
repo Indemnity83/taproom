@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests;
 
 class UsersController extends Controller
 {
-
     /**
      * UsersController constructor.
      */
@@ -18,7 +15,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Users tokens (api-keys)
+     * Users tokens (api-keys).
      */
     public function tokens()
     {

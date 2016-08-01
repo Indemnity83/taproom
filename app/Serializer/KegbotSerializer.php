@@ -6,7 +6,6 @@ use League\Fractal\Serializer\ArraySerializer;
 
 class KegbotSerializer extends ArraySerializer
 {
-
     /**
      * Serialize a collection.
      *

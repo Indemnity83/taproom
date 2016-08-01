@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateApiKeysTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -23,7 +22,7 @@ class CreateApiKeysTable extends Migration
             $table->nullableTimestamps();
             $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
 
         Schema::create('api_logs', function (Blueprint $table) {
@@ -39,9 +38,8 @@ class CreateApiKeysTable extends Migration
             $table->index('route');
             $table->index('method');
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
-
     }
 
     /**
@@ -62,5 +60,4 @@ class CreateApiKeysTable extends Migration
         Schema::drop('api_keys');
         Schema::drop('api_logs');
     }
-
 }

@@ -18,7 +18,6 @@ use Illuminate\Support\Str;
  */
 class Token extends Model
 {
-
     public $incrementing = false;
     public $fillable = ['name'];
     protected $primaryKey = 'token';
@@ -34,7 +33,7 @@ class Token extends Model
     ];
 
     /**
-     * Generate a new token
+     * Generate a new token.
      * @param null $name name of device
      * @param int $expires expiration of token in minutes (default 60)
      * @return static
@@ -42,15 +41,16 @@ class Token extends Model
     public static function generate($name = null, $expires = 60)
     {
         $token = new static;
-        $token->token = Str::upper(Str::random(3) . '-' . Str::random(3));
+        $token->token = Str::upper(Str::random(3).'-'.Str::random(3));
         $token->expires_at = Carbon::now()->addMinute($expires);
         $token->name = $name;
         $token->save();
+
         return $token;
     }
 
     /**
-     * Clear expired tokens from the database
+     * Clear expired tokens from the database.
      *
      * @return mixed
      */
@@ -64,11 +64,11 @@ class Token extends Model
      */
     public static function tokens()
     {
-        return implode(',', Static::all()->pluck('token')->toArray());
+        return implode(',', static::all()->pluck('token')->toArray());
     }
 
     /**
-     * The "booting" method of the model
+     * The "booting" method of the model.
      */
     protected static function boot()
     {
@@ -79,7 +79,7 @@ class Token extends Model
     }
 
     /**
-     * Query scope for expired tokens
+     * Query scope for expired tokens.
      *
      * @param $query
      * @return mixed
@@ -100,7 +100,7 @@ class Token extends Model
     }
 
     /**
-     * Validate the token
+     * Validate the token.
      *
      * @return $this
      */
@@ -118,7 +118,7 @@ class Token extends Model
     }
 
     /**
-     * Expire the token
+     * Expire the token.
      *
      * @return $this
      */
@@ -131,7 +131,7 @@ class Token extends Model
     }
 
     /**
-     * Tokens (may) belong to an API Key
+     * Tokens (may) belong to an API Key.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

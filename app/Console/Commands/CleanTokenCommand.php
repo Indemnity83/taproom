@@ -39,6 +39,6 @@ class CleanTokenCommand extends Command
     public function handle()
     {
         $count = Token::clean();
-        $this->info("Cleaned $count " . str_plural("token", $count) . " from the database");
+        $this->info("Cleaned $count ".str_plural('token', $count).' from the database');
     }
 }

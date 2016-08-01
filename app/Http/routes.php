@@ -23,11 +23,11 @@ Route::get('/home', 'HomeController@index');
 Route::get('api/v1/version', function () {
     return Response::json([
         'object' => [
-            'server_version' => '1.2.3'
+            'server_version' => '1.2.3',
         ],
         'meta' => [
-            'result' => 'ok'
-        ]
+            'result' => 'ok',
+        ],
     ]);
 });
 
