@@ -30,7 +30,8 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
      *
      * @return void
      */
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
         Artisan::call('migrate');

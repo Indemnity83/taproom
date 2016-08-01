@@ -10,18 +10,17 @@ use Illuminate\Http\Request;
 
 class DeviceLinkController extends ApiGuardController
 {
-
     protected $apiMethods = [
         'startPairing' => [
-            'keyAuthentication' => false
+            'keyAuthentication' => false,
         ],
         'checkPairing' => [
-            'keyAuthentication' => false
+            'keyAuthentication' => false,
         ],
     ];
 
     /**
-     * Generate a pairing token
+     * Generate a pairing token.
      *
      * @param Request $request
      * @return mixed
@@ -37,7 +36,7 @@ class DeviceLinkController extends ApiGuardController
     }
 
     /**
-     * Show status of pairing token
+     * Show status of pairing token.
      *
      * @param Token $token
      * @return mixed
@@ -52,5 +51,4 @@ class DeviceLinkController extends ApiGuardController
 
         return $this->response->withItem($token, new TokenTransformer);
     }
-
 }
